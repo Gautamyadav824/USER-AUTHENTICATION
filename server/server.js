@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 // import connectDB from "./config/mongodb.js";
 import mongoose from "mongoose";
 import dns from "dns";
+import authRouter from './routes/authRoutes.js';
 
 dns.setServers(["1.1.1.1", "8.8.8.8"]);
 
@@ -19,6 +20,8 @@ app.use(cors({credentials:true}));
 app.get("/",(req,res) => {
     res.send("Api Working fine");
 });
+
+app.use('/api/auth', authRouter);
 
 mongoose
   .connect(process.env.MONGO_URI)
