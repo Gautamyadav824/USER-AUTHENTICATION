@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
 import dns from "dns";
 import authRouter from './routes/authRoutes.js';
+import userRouter from "./routes/userRoutes.js";
 
 dns.setServers(["1.1.1.1", "8.8.8.8"]);
 
@@ -22,6 +23,7 @@ app.get("/",(req,res) => {
 });
 
 app.use('/api/auth', authRouter);
+app.use('/api/user', userRouter);
 
 mongoose
   .connect(process.env.MONGO_URI)
