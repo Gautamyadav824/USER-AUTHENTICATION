@@ -13,10 +13,24 @@ dns.setServers(["1.1.1.1", "8.8.8.8"]);
 const app = express();
 const port = process.env.PORT || 4000;
 
+// CORS configuration - allow localhost on any port for development
+app.use(cors({ 
+  origin: (origin, callback) => {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    // Allow localhost and 127.0.0.1 on any port
+    if (origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:')) {
+      return callback(null, true);
+    }
+    
+    callback(new Error('Not allowed by CORS'));
+  },
+  credentials: true 
+}));
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({credentials:true}));
 
 app.get("/",(req,res) => {
     res.send("Api Working fine");
